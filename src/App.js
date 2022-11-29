@@ -1,24 +1,34 @@
-import logo from './logo.svg';
+import logo from './logo.png';
 import './App.css';
+import { BrowserRouter as Router,Routes, Route, NavLink } from 'react-router-dom'
+
+import { useState } from 'react';
+import Home from './components/Home';
+import EditCountry from './components/EditCountry';
 
 function App() {
+  const [countriesData,setCountriesData] =useState([]);
+
+    const countries = (data)=>{
+        // console.log(data);
+        setCountriesData(countriesData => [...countriesData,data])
+        // console.log(countriesData)
+    
+      }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+          
+    <>
+          
+    <Router>
+      <Routes>
+        <Route index  element={<Home country={countries} countries={countriesData}/>} />
+        <Route exact path='/country-details/:id'  element={<EditCountry updateCountries country={countriesData} />} />
+      </Routes>
+      
+    </Router>
+    </>
+    
   );
 }
 
